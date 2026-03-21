@@ -1,0 +1,7 @@
+.vscode/
+node_modules/
+setup_assets.bat
+setup_assets.ps1
+assets/placeholder.txt
+test.txt
+*.log
