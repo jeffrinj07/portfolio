@@ -87,7 +87,72 @@ document.addEventListener('DOMContentLoaded', () => {
         revealObserver.observe(el);
     });
 
-    // 5. Form Submission (UI Only)
+    // 5. Modal Logic
+    const modal = document.getElementById('project-modal');
+    const modalContent = document.getElementById('modal-content');
+    const closeBtn = document.getElementById('close-modal');
+    const backdrop = document.getElementById('modal-backdrop');
+    const viewButtons = document.querySelectorAll('.view-case-study');
+
+    function openModal(card) {
+        // Populate modal data
+        document.getElementById('modal-title').textContent = card.dataset.title;
+        document.getElementById('modal-img').src = card.dataset.img;
+        document.getElementById('modal-problem').textContent = card.dataset.problem;
+        document.getElementById('modal-approach').textContent = card.dataset.approach;
+        document.getElementById('modal-impact').textContent = card.dataset.impact;
+
+        // Populate tags
+        const stackList = document.getElementById('modal-stack');
+        stackList.innerHTML = '';
+        card.dataset.stack.split(',').forEach(tech => {
+            const span = document.createElement('span');
+            span.className = 'modal-tag';
+            span.textContent = tech.trim();
+            stackList.appendChild(span);
+        });
+
+        // Populate features
+        const featuresList = document.getElementById('modal-features');
+        featuresList.innerHTML = '';
+        card.dataset.features.split(',').forEach(feature => {
+            const li = document.createElement('li');
+            li.textContent = feature.trim();
+            featuresList.appendChild(li);
+        });
+
+        // Show modal
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        setTimeout(() => {
+            modal.classList.add('show');
+            document.body.classList.add('modal-open');
+        }, 10);
+    }
+
+    function closeModal() {
+        modal.classList.add('hide');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex', 'show', 'hide');
+            document.body.classList.remove('modal-open');
+        }, 300);
+    }
+
+    viewButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const card = e.target.closest('.project-card');
+            openModal(card);
+        });
+    });
+
+    closeBtn.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', closeModal);
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+    });
+
+    // 6. Form Submission (UI Only)
     const contactForm = document.getElementById('contact-form');
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();

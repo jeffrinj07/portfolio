@@ -92,6 +92,7 @@ nav.scrolled {
 .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -108,7 +109,37 @@ nav.scrolled {
     animation: blink 0.8s infinite;
 }
 
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+/* Modal Animations */
+#project-modal.show #modal-content {
+    animation: modalScaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalScaleIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+#project-modal.hide #modal-content {
+    animation: modalScaleOut 0.3s ease-in forwards;
+}
+
+@keyframes modalScaleOut {
+    from { transform: scale(1); opacity: 1; }
+    to { transform: scale(0.9); opacity: 0; }
+}
+
+/* Modal Open State */
+body.modal-open {
+    overflow: hidden;
+}
+
+/* Case Study Tags */
+.modal-tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--primary);
 }
